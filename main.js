@@ -21,7 +21,9 @@ function addItem(name, count, imgPath) {
     const item = document.createElement("img");
     item.setAttribute("class", name);
     item.setAttribute("src", imgPath);
+    //positon 걸어주지 않으면 body로 잡혀리는것 기억.
     item.style.position = "absolute";
+    //랜덤 좌표로 이미지 배치
     const x = `${Math.random() * (x2 - x1) + x1}px`;
     const y = `${Math.random() * (y2 - y1) + y1}px`;
     item.style.left = x;
