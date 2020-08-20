@@ -69,6 +69,10 @@ button {
   margin-top: 65px;
 }
 
+.game__field {
+  position: relative;
+}
+
 .pop-up {
   background-color: #00000090;
   color: white;
