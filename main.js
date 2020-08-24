@@ -1,13 +1,14 @@
 "use strict";
-//시작 버튼 클릭 시 gamefield에 당근 5개 벌레 5개 생성해서 배치
+
 const startBtn = document.querySelector(".fa-play");
 const stopBtn = document.querySelector(".fa-stop");
 const gameField = document.querySelector(".game__field");
 const fieldRect = gameField.getBoundingClientRect();
 const popUp = document.querySelector(".pop-up");
+const refreshyBtn = document.querySelector(".refresh");
 
 let sec = 10;
-//플레이버튼 클릭 시 실행
+//시작 버튼 클릭 시 gamefield에 당근 5개 벌레 5개 생성해서 배치
 startBtn.addEventListener("click", () => {
   initGame();
 
@@ -17,10 +18,36 @@ startBtn.addEventListener("click", () => {
     document.querySelector(".game__timer").innerHTML = sec;
     sec--;
 
-    //타임아웃시
+    //타임아웃시 팝업창 발생
     if (sec < 0) {
       clearInterval(timer);
       popUp.classList.add("pop-up--visible");
+      //시간 초과시 refresh 버튼 활성화
+      refreshyBtn.addEventListener("click", () => {
+        gameField.innerHTML = "";
+        popUp.classList.remove("pop-up--visible");
+        sec = 10;
+        var timer = setInterval(function () {
+          document.querySelector(".game__timer").innerHTML = sec;
+          sec--;
+
+          //타임아웃시 팝업창 발생
+          if (sec < 0) {
+            clearInterval(timer);
+            popUp.classList.add("pop-up--visible");
+            //시간 초과시 refresh 버튼 활성화
+            refreshyBtn.addEventListener("click", () => {
+              gameField.innerHTML = "";
+              popUp.classList.remove("pop-up--visible");
+              sec = 10;
+
+              initGame();
+            });
+          }
+        }, 1000);
+
+        initGame();
+      });
     }
   }, 1000);
 });
