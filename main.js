@@ -1,9 +1,31 @@
 "use strict";
 //시작 버튼 클릭 시 gamefield에 당근 5개 벌레 5개 생성해서 배치
-const startBtn = document.querySelector(".game__button");
+const startBtn = document.querySelector(".fa-play");
+const stopBtn = document.querySelector(".fa-stop");
 const gameField = document.querySelector(".game__field");
 const fieldRect = gameField.getBoundingClientRect();
+const popUp = document.querySelector(".pop-up");
 
+let sec = 10;
+//플레이버튼 클릭 시 실행
+startBtn.addEventListener("click", () => {
+  initGame();
+
+  startBtn.classList.add("played");
+  stopBtn.classList.add("visible");
+  var timer = setInterval(function () {
+    document.querySelector(".game__timer").innerHTML = sec;
+    sec--;
+
+    //타임아웃시
+    if (sec < 0) {
+      clearInterval(timer);
+      popUp.classList.add("pop-up--visible");
+    }
+  }, 1000);
+});
+
+//게임시작
 function initGame() {
   //벌레와 당근을 생성한 뒤 field에 추가해줌
   addItem("bug", 5, "img/bug.png");
@@ -31,5 +53,3 @@ function addItem(name, count, imgPath) {
     gameField.appendChild(item);
   }
 }
-
-initGame();

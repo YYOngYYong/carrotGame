@@ -41,6 +41,20 @@ button {
   transform: scale(1.1);
 }
 
+.fa-play {
+  padding: 10px;
+}
+
+.fa-play.played {
+  display: none;
+}
+.fa-stop {
+  display: none;
+}
+.fa-stop.visible {
+  display: block;
+}
+
 .game__timer {
   width: 100px;
   background-color: white;
@@ -94,8 +108,13 @@ button {
   margin-top: 20px;
 }
 
-.pop-up--hide {
+.pop-up {
   display: none;
+}
+.pop-up--visible {
+  display: block;
+  align-items: center;
+  display: flex;
 }
 
 .message {
