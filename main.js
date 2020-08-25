@@ -6,10 +6,15 @@ const gameField = document.querySelector(".game__field");
 const fieldRect = gameField.getBoundingClientRect();
 const popUp = document.querySelector(".pop-up");
 const refreshyBtn = document.querySelector(".refresh");
-
+const game__score = document.querySelector(".game__score");
 let sec = 10;
-let start = true;
+let start = false;
+let carrotCount = 5;
+let score = 0;
+
+gameField.addEventListener("click", onEventClick);
 //시작 버튼 클릭 시 gamefield에 당근 5개 벌레 5개 생성해서 배치
+start = true;
 startBtn.addEventListener("click", () => {
   initGame();
   startBtn.classList.add("played");
@@ -28,6 +33,7 @@ startBtn.addEventListener("click", () => {
     //타임아웃시 팝업창 발생
     if (sec < 0) {
       clearInterval(timer);
+      score = 0;
       popUp.classList.add("pop-up--visible");
       //시간 초과시 refresh 버튼 활성화
       refreshyBtn.addEventListener("click", () => {
@@ -48,7 +54,6 @@ startBtn.addEventListener("click", () => {
               gameField.innerHTML = "";
               popUp.classList.remove("pop-up--visible");
               sec = 10;
-
               initGame();
             });
           }
@@ -66,7 +71,30 @@ function initGame() {
     addItem("bug", 5, "img/bug.png");
     addItem("carrot", 5, "img/carrot.png");
   }
+
   //벌레와 당근을 생성한 뒤 field에 추가해줌
+}
+
+//게임필드 클릭
+
+function onEventClick(event) {
+  const target = event.target;
+  if (target.matches(".carrot")) {
+    target.remove();
+    score++;
+    game__score.innerText = score;
+    if (score == 5) {
+      popUp.classList.add("pop-up--visible");
+      score = 0;
+      game__score.innerText = "";
+      refreshyBtn.addEventListener("click", () => {
+        gameField.innerHTML = "";
+        popUp.classList.remove("pop-up--visible");
+        sec = 10;
+        initGame();
+      });
+    }
+  }
 }
 
 const carrotSize = 80;
