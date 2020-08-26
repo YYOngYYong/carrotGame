@@ -1,0 +1,100 @@
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+body {
+  text-align: center;
+}
+
+.game {
+  background: url(img/background.png) center/cover;
+  height: 600px;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.game__header {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
+
+.game__button {
+  width: 60px;
+  height: 60px;
+  background-color: wheat;
+  border: 4px solid black;
+  font-size: 24px;
+  transition: all 300ms ease-in;
+}
+
+.game__button:hover {
+  transform: scale(1.1);
+}
+
+.game__timer {
+  width: 100px;
+  background-color: white;
+  text-align: center;
+  border: 5px solid black;
+  margin-top: 8px;
+  visibility: hidden;
+  font-size: 24px;
+}
+
+.game__score {
+  width: 50px;
+  height: 50px;
+  font-size: 36px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  border: 3px solid black;
+  background-color: salmon;
+  margin-top: 8px;
+  visibility: hidden;
+}
+
+.game__field {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  position: relative;
+}
+
+.pop-up {
+  display: block;
+  margin: auto;
+  width: 400px;
+  height: 120px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+  background-color: #00000090;
+  transform: translateY(-150%);
+}
+
+.pop-up--hide {
+  display: none;
+}
+
+.pop-up__refresh {
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  background-color: wheat;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.message {
+  display: block;
+  font-size: 38px;
+}
