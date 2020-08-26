@@ -70,6 +70,7 @@ function showStopBtn() {
   const icon = document.querySelector(".fas");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
+  gameBtn.style.visibility = "visible";
 }
 
 function hideGameButton() {
