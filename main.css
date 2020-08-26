@@ -120,8 +120,3 @@ button {
 .message {
   font-size: 30px;
 }
-
-.carrot:hover,
-.bug:hover {
-  transform: scale(1.1);
-}

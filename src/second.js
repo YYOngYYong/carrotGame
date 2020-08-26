@@ -1,8 +1,7 @@
 "use strict";
 import PopUp from "./popUp.js";
+import Field from "./field.js";
 
-const field = document.querySelector(".game__field");
-const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector(".game__button");
 const gameScore = document.querySelector(".game__score");
 const gameTimer = document.querySelector(".game__timer");
@@ -26,6 +25,25 @@ gameBanner.setClickListener(() => {
   startGame();
 });
 
+const gameField = new Field(carrotCount, bugCount);
+gameField.setClickListener(onItemClick);
+
+function onItemClick(event) {
+  if (!started) {
+    return;
+  }
+
+  if (item === "carrot") {
+    score++;
+    updateScoreBoard();
+    if (score == carrotCount) {
+      finishGame(true);
+    }
+  } else if (item === "bug") {
+    finishGame(false);
+  }
+}
+
 gameBtn.addEventListener("click", () => {
   if (started) {
     stopGame();
@@ -33,8 +51,6 @@ gameBtn.addEventListener("click", () => {
     startGame();
   }
 });
-
-field.addEventListener("click", (event) => onFieldClick(event));
 
 function startGame() {
   started = true;
@@ -109,29 +125,8 @@ function updateTimeText(time) {
 }
 
 function initGame() {
-  score = 0;
-  field.innerHTML = "";
   gameScore.innerText = carrotCount;
-  addItem("carrot", carrotCount, "img/carrot.png");
-  addItem("bug", bugCount, "img/bug.png");
-}
-
-function onFieldClick(event) {
-  if (!started) {
-    return;
-  }
-  const target = event.target;
-  if (target.matches(".carrot")) {
-    target.remove();
-    score++;
-    playSound(carrotSound);
-    updateScoreBoard();
-    if (score == carrotCount) {
-      finishGame(true);
-    }
-  } else if (target.matches(".bug")) {
-    finishGame(false);
-  }
+  gameField.init();
 }
 
 function playSound(sound) {
@@ -144,26 +139,4 @@ function stopSound(sound) {
 }
 function updateScoreBoard() {
   gameScore.innerText = carrotCount - score;
-}
-
-function addItem(className, count, imgPath) {
-  const x1 = 0;
-  const y1 = 0;
-  const x2 = fieldRect.width - carrotSize;
-  const y2 = fieldRect.height - carrotSize;
-  for (let i = 0; i < count; i++) {
-    const item = document.createElement("img");
-    item.setAttribute("class", className);
-    item.setAttribute("src", imgPath);
-    item.style.position = "absolute";
-    const x = randomNum(x1, x2);
-    const y = randomNum(y1, y2);
-    item.style.left = `${x}px`;
-    item.style.top = `${y}px`;
-    field.appendChild(item);
-  }
-}
-
-function randomNum(min, max) {
-  return Math.random() * (max - min) + min;
 }

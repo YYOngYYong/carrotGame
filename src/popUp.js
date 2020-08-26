@@ -7,7 +7,7 @@ export default class PopUp {
     this.popUp = document.querySelector(".pop-up");
     this.refresh.addEventListener("click", () => {
       this.onClick && this.onClick();
-      hide();
+      this.hide();
     });
   }
 
@@ -17,7 +17,7 @@ export default class PopUp {
 
   showWithText(text) {
     this.message.innerText = text;
-    thispopUp.classList.remove("pop-up--hide");
+    this.popUp.classList.remove("pop-up--hide");
   }
 
   hide() {
