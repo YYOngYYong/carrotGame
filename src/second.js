@@ -1,6 +1,7 @@
 "use strict";
 import PopUp from "./popUp.js";
 import Field from "./field.js";
+import * as sound from "./sound.js";
 
 const gameBtn = document.querySelector(".game__button");
 const gameScore = document.querySelector(".game__score");
@@ -10,11 +11,6 @@ const carrotSize = 80;
 const carrotCount = 5;
 const bugCount = 5;
 
-const carrotSound = new Audio("./sound/carrot_pull.mp3");
-const alertSound = new Audio("./sound/alert.wav");
-const bgSound = new Audio("./sound/bg.mp3");
-const bugSound = new Audio("./sound/bug_pull.mp3");
-const winSound = new Audio("./sound/game_win.mp3");
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -28,18 +24,18 @@ gameBanner.setClickListener(() => {
 const gameField = new Field(carrotCount, bugCount);
 gameField.setClickListener(onItemClick);
 
-function onItemClick(event) {
+function onItemClick(item) {
   if (!started) {
     return;
   }
-
+  console.log("click");
   if (item === "carrot") {
     score++;
     updateScoreBoard();
     if (score == carrotCount) {
       finishGame(true);
     }
-  } else if (item === "bug") {
+  } else if (item == "bug") {
     finishGame(false);
   }
 }
@@ -54,7 +50,7 @@ gameBtn.addEventListener("click", () => {
 
 function startGame() {
   started = true;
-  playSound(bgSound);
+  sound.playBg();
   initGame();
   showStopBtn();
   showTimerAndScore();
@@ -63,24 +59,24 @@ function startGame() {
 
 function stopGame() {
   started = false;
-  stopSound(bgSound);
+  sound.stopBg();
   stopGameTimer();
   hideGameButton();
   gameBanner.showWithText("replay?");
 
-  playSound(alertSound);
+  sound.playAlert();
 }
 
 function finishGame(win) {
   started = false;
   hideGameButton();
   if (win) {
-    playSound(winSound);
+    sound.playWin();
   } else {
-    playSound(bugSound);
+    sound.playBug();
   }
   stopGameTimer();
-  stopSound(bgSound);
+  sound.stopBg();
   gameBanner.showWithText(win ? "YOU WON" : "YOU LOSE");
   console.log(score);
 }
@@ -125,18 +121,11 @@ function updateTimeText(time) {
 }
 
 function initGame() {
+  score = 0;
   gameScore.innerText = carrotCount;
   gameField.init();
 }
 
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function stopSound(sound) {
-  sound.pause();
-}
 function updateScoreBoard() {
   gameScore.innerText = carrotCount - score;
 }
