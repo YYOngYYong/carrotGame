@@ -2,7 +2,29 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class Game {
+//Builder pattern
+export default class GameBuilder {
+  sec(time) {
+    this.sec = time;
+    return this;
+  }
+
+  carrotCount(num) {
+    this.carrotCount = num;
+    return this;
+  }
+
+  bugCount(num) {
+    this.bugCount = num;
+    return this;
+  }
+
+  build() {
+    return new Game(this.sec, this.carrotCount, this.bugCount);
+  }
+}
+
+class Game {
   constructor(sec, carrotCount, bugCount) {
     this.gameBtn = document.querySelector(".game__button");
     this.gameScore = document.querySelector(".game__score");
